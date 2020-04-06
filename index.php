@@ -43,7 +43,7 @@ echo '<!doctype html>
             My Wish List
         </h1>
         <p class="subtitle">
-            جایی که میتونید هدیه بخرید برام
+            Where my friends know about my literature wish list.
         </p>
     </div>
 </section>
