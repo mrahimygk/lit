@@ -27,7 +27,7 @@ if(!empty($_POST)){
 
 echo '<!doctype html>
 
-<html dir="rtl" lang="fa">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
