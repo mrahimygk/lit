@@ -6,7 +6,7 @@ $password = "pass";
 $db = "books";
 
 $conn = new mysqli($servername, $username, $password, $db);
-
+$conn-> set_charset("utf8");
 
 if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
@@ -17,7 +17,7 @@ if(!empty($_POST)){
 	$buyerName = $_POST[$buyerNameKey];
 	$bookId = explode("-", $buyerNameKey)[1];
 
-	$sql = "UPDATE wishlist SET shipper_name='$buyerName' WHERE id='$bookId'";
+	$sql = "UPDATE wishlist SET shipper_name='$buyerName', showable=false WHERE id='$bookId'";
 	if ($conn->query($sql) === TRUE) {
 		//echo "New record created successfully";
 	} else {
@@ -37,7 +37,7 @@ echo '<!doctype html>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <body>
-<section class="section">
+<section class="section" style="padding: 0.5em;">
     <div class="container">
         <h1 class="title">
             My Wish List
@@ -67,6 +67,7 @@ echo '<!doctype html>
     if($result = $conn->query("SELECT * FROM wishlist ORDER BY id;")){
 	    if($result->num_rows >0){
 		while($row = $result->fetch_assoc()){
+			if(!$row["showable"]) continue;
 			$hasBuyer = isset($row["shipper_name"]);
 			if($hasBuyer){
 				echo '<div class="box has-background-warning">';
@@ -104,7 +105,7 @@ EOT;
 				</div>
 EOT;
 				else echo <<<EOT
-				<span>{$row["shipper_name"]}</span>
+				<span><span class="is-hidden-desktop">Will br bought by: </span>{$row["shipper_name"]}<span>
 EOT;
 				echo '
 			    </div>
